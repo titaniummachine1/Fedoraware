@@ -8,6 +8,7 @@
 #include "../../Features/Backtrack/Backtrack.h"
 #include "../../Features/Misc/Misc.h"
 #include "../../Features/Killsay/Killsay.h"
+#include "../../Features/Buttplug/Buttplug.h"
 
 void CEventListener::Setup(const std::deque<const char*>& deqEvents)
 {
@@ -39,6 +40,7 @@ void CEventListener::FireGameEvent(CGameEvent* pEvent)
 	F::Statistics.Event(pEvent, uNameHash);
 	// Lol
 	F::Killsay.FireGameEvent(uNameHash, pEvent);
+	F::Buttplug.FireGameEvent(uNameHash, pEvent);
 	/*F::Killstreaker.FireEvents(pEvent, uNameHash);*/
 
 	if (uNameHash == FNV1A::HashConst("player_hurt"))

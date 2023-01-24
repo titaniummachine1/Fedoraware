@@ -20,6 +20,7 @@
 #include "ConfigManager/ConfigManager.h"
 
 #include <mutex>
+#include <shellapi.h>
 
 #pragma warning (disable : 4309)
 

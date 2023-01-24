@@ -12,7 +12,7 @@ void CButtplug::DoRequest(std::string msgType, boost::json::object payload) {
 void CButtplug::RequestServerInfo() {
 	boost::json::object payload;
 	payload["ClientName"] = "Fedoraware";
-	payload["MessageVersion"] = 2;
+	payload["MessageVersion"] = 3;
 	this->DoRequest("RequestServerInfo", payload);
 }
 
@@ -21,22 +21,43 @@ void CButtplug::Ping() {
 	this->DoRequest("Ping", payload);
 }
 
-void CButtplug::ScalarCmd(int deviceIdx, std::vector<ButtPlug::BPScalar> scalars) {
+void CButtplug::StartScanning() {
+	boost::json::object payload;
+	this->DoRequest("StartScanning", payload);
+}
+
+void CButtplug::StopScanning() {
+	boost::json::object payload;
+	this->DoRequest("StopScanning", payload);
+}
+
+void CButtplug::StopAllDevices() {
+	boost::json::object payload;
+	this->DoRequest("StopAllDevices", payload);
+}
+
+void CButtplug::ScalarCmd(int deviceIdx, int motorIdx, float scalar, const char* actType) {
 	boost::json::object payload;
 	payload["DeviceIndex"] = deviceIdx;
 	boost::json::array scArray = boost::json::array();
-	for (ButtPlug::BPScalar sc : scalars) {
-		scArray.push_back({
-			{"Index", sc.index},
-			{"Scalar",sc.scalar},
-			{"ActuatorType", sc.actuatorType}	
-		});
-	}
+	scArray.push_back({
+		{"Index", motorIdx},
+		{"Scalar",scalar},
+		{"ActuatorType", actType}
+	});
 	payload["Scalars"] = scArray;
 	this->DoRequest("ScalarCmd", payload);
 }
 
+
 void CButtplug::RequestDeviceList() {
 	boost::json::object payload;
 	this->DoRequest("RequestDeviceList", payload);
+}
+
+void CButtplug::StopDeviceCmd(int deviceIdx)
+{
+	boost::json::object payload;
+	payload["DeviceIndex"] = deviceIdx;
+	this->DoRequest("StopDeviceCmd", payload);
 }
