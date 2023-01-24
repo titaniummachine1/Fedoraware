@@ -136,7 +136,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
-      <AdditionalIncludeDirectories>$(ProjectDir)TeamFortress2\SDK\Lua\include;$(ProjectDir)TeamFortress2\SDK\sol2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)TeamFortress2\SDK\Lua\include;$(ProjectDir)TeamFortress2\SDK\sol2;$(ProjectDir)TeamFortress2\Utils\Websocket;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -150,6 +150,8 @@
     <ClCompile Include="TeamFortress2\Features\AntiHack\FakeLag\FakeLag.cpp" />
     <ClCompile Include="TeamFortress2\Features\AutoQueue\AutoQueue.cpp" />
     <ClCompile Include="TeamFortress2\Features\Backtrack\Backtrack.cpp" />
+    <ClCompile Include="TeamFortress2\Features\Buttplug\Buttplug.cpp" />
+    <ClCompile Include="TeamFortress2\Features\Buttplug\ButtplugAPI.cpp" />
     <ClCompile Include="TeamFortress2\Features\Camera\CameraWindow.cpp" />
     <ClCompile Include="TeamFortress2\Features\Commands\Commands.cpp" />
     <ClCompile Include="TeamFortress2\Features\CritHack\CritHack.cpp" />
@@ -328,6 +330,8 @@
   <ItemGroup>
     <!-- <ClInclude Include="TeamFortress2\Features\Backtrack\Backtrack.h" /> -->
     <ClInclude Include="TeamFortress2\Features\AutoQueue\AutoQueue.h" />
+    <ClInclude Include="TeamFortress2\Features\Buttplug\Buttplug.h" />
+    <ClInclude Include="TeamFortress2\Features\Buttplug\ButtplugStructs.h" />
     <ClInclude Include="TeamFortress2\Features\Commands\Commands.h" />
     <ClInclude Include="TeamFortress2\Features\Killsay\Killsay.h" />
     <ClInclude Include="TeamFortress2\Features\Misc\Notifications\Notifications.h" />
@@ -877,6 +881,99 @@
     <ClInclude Include="TeamFortress2\Utils\Utils.h" />
     <ClInclude Include="TeamFortress2\Utils\UtlVector\UtlVector.h" />
     <ClInclude Include="TeamFortress2\Utils\VFunc\VFunc.h" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\base64\base64.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\client.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\close.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\common\asio.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\common\asio_ssl.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\common\chrono.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\common\connection_hdl.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\common\cpp11.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\common\functional.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\common\md5.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\common\memory.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\common\network.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\common\platforms.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\common\random.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\common\regex.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\common\stdint.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\common\system_error.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\common\thread.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\common\time.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\common\type_traits.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\concurrency\basic.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\concurrency\none.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\config\asio.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\config\asio_client.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\config\asio_no_tls.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\config\asio_no_tls_client.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\config\boost_config.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\config\core.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\config\core_client.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\config\debug.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\config\debug_asio.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\config\debug_asio_no_tls.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\config\minimal_client.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\config\minimal_server.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\connection.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\connection_base.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\endpoint.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\endpoint_base.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\error.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\extensions\extension.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\extensions\permessage_deflate\disabled.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\extensions\permessage_deflate\enabled.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\frame.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\http\constants.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\http\impl\parser.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\http\impl\request.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\http\impl\response.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\http\parser.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\http\request.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\http\response.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\impl\connection_impl.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\impl\endpoint_impl.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\impl\utilities_impl.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\logger\basic.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\logger\levels.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\logger\stub.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\logger\syslog.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\message_buffer\alloc.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\message_buffer\message.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\message_buffer\pool.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\processors\base.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\processors\hybi00.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\processors\hybi07.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\processors\hybi08.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\processors\hybi13.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\processors\processor.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\random\none.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\random\random_device.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\roles\client_endpoint.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\roles\server_endpoint.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\server.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\sha1\sha1.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\transport\asio\base.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\transport\asio\connection.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\transport\asio\endpoint.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\transport\asio\security\base.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\transport\asio\security\none.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\transport\asio\security\tls.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\transport\base\connection.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\transport\base\endpoint.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\transport\debug\base.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\transport\debug\connection.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\transport\debug\endpoint.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\transport\iostream\base.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\transport\iostream\connection.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\transport\iostream\endpoint.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\transport\stub\base.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\transport\stub\connection.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\transport\stub\endpoint.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\uri.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\utf8_validator.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\utilities.hpp" />
+    <ClInclude Include="TeamFortress2\Utils\Websocket\websocketpp\version.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
@@ -896,11 +993,13 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\boost.1.79.0\build\boost.targets" Condition="Exists('..\packages\boost.1.79.0\build\boost.targets')" />
+    <Import Project="..\packages\boost_random-vc143.1.79.0\build\boost_random-vc143.targets" Condition="Exists('..\packages\boost_random-vc143.1.79.0\build\boost_random-vc143.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>Dieses Projekt verweist auf mindestens ein NuGet-Paket, das auf diesem Computer fehlt. Verwenden Sie die Wiederherstellung von NuGet-Paketen, um die fehlenden Dateien herunterzuladen. Weitere Informationen finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=322105". Die fehlende Datei ist "{0}".</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\boost.1.79.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost.1.79.0\build\boost.targets'))" />
+    <Error Condition="!Exists('..\packages\boost_random-vc143.1.79.0\build\boost_random-vc143.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_random-vc143.1.79.0\build\boost_random-vc143.targets'))" />
   </Target>
 </Project>
