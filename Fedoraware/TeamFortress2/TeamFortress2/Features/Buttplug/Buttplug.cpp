@@ -12,12 +12,13 @@ void CButtplug::Init() {
 		return;
 	}
 	wsClient.connect(con);
-	std::thread t (std::bind(&client::run, &wsClient));
-	
-	t.detach();
+	t = std::thread(std::bind(&client::run, &wsClient));	
 }
 
-
+void CButtplug::Shutdown() {
+	this->wsClient.stop();
+	t.join();
+}
 
 void CButtplug::on_open(websocketpp::connection_hdl hdl) {
 	I::Cvar->ConsolePrintf("Connection open\n");
@@ -26,5 +27,9 @@ void CButtplug::on_open(websocketpp::connection_hdl hdl) {
 }
 
 void CButtplug::on_message(websocketpp::connection_hdl hdl, message_ptr msg) {
-	I::Cvar->ConsolePrintf("WS MSG: %s\n", msg->get_payload());
+	/*boost::json::object json= boost::json::parse(msg->get_payload()).as_array()[0].as_object();
+	if (boost::json::value* msg = json.if_contains("ServerInfo"); msg != nullptr) {
+		I::Cvar->ConsolePrintf("%s\n", boost::json::serialize(*msg));
+	}*/
+	I::Cvar->ConsolePrintf("%s", msg->get_payload().c_str());
 }

@@ -19,10 +19,16 @@ class CButtplug {
 private:
 	client wsClient;
 	websocketpp::connection_hdl hdl;
+	std::thread t;
+	
+
 	void on_message(websocketpp::connection_hdl hdl, message_ptr msg);
 	void on_open(websocketpp::connection_hdl hdl);
+
 	int msgId = 1;
-	
+
+	void DoRequest(std::string, boost::json::object);
+	void PingLoop();
 public:
 	void Ping();
 	void RequestServerInfo();
@@ -31,10 +37,11 @@ public:
 	void RequestDeviceList();
 	void StopDeviceCmd(int deviceIdx);
 	void StopAllDevices();
-	void ScalarCmd(int deviceIdx, std::vector<BPScalar> scalars);
-	void LinearCmd(int deviceIdx, BPLinear vectors...);
-	void RotateCmd(int deviceIdx, BPRotate rotations...);
+	void ScalarCmd(int deviceIdx, std::vector<ButtPlug::BPScalar> scalars);
+	void LinearCmd(int deviceIdx, ButtPlug::BPLinear vectors...);
+	void RotateCmd(int deviceIdx, ButtPlug::BPRotate rotations...);
 	void Init();
+	void Shutdown();
 };
 
 ADD_FEATURE(CButtplug, Buttplug)

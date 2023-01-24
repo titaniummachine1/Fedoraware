@@ -1,60 +1,42 @@
 #include "Buttplug.h"
+#include <boost/json.hpp>
 
-void CButtplug::RequestServerInfo() {
-	rapidjson::Document json;
-	json.SetArray();
-	rapidjson::Document::AllocatorType& allocator = json.GetAllocator();
-
-	rapidjson::Value cmd;
-	cmd.SetObject();
-	rapidjson::Value payload;
-	payload.SetObject();
-	payload.AddMember("Id", this->msgId, allocator);
-	payload.AddMember("ClientName", rapidjson::StringRef(Vars::Menu::CheatName.c_str()), allocator);
-	payload.AddMember("MessageVersion", 1, allocator);
-
-	cmd.AddMember("RequestServerInfo", payload, allocator);
-	json.PushBack(cmd, allocator);
-
-	rapidjson::StringBuffer strbuf;
-	rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
-	json.Accept(writer);
-
-	const char* jsonString = strbuf.GetString();
-	this->wsClient.send(this->hdl, jsonString, websocketpp::frame::opcode::text);
+void CButtplug::DoRequest(std::string msgType, boost::json::object payload) {
+	boost::json::array json;
+	payload["Id"] = this->msgId;
+	json.push_back(boost::json::object{ {msgType,payload} });
+	this->wsClient.send(this->hdl, boost::json::serialize(json), websocketpp::frame::opcode::text);
+	this->msgId++;
 }
 
-void CButtplug::ScalarCmd(int deviceIdx, std::vector<BPScalar> scalars) {
-	rapidjson::Document json;
-	json.SetArray();
-	rapidjson::Document::AllocatorType& allocator = json.GetAllocator();
-	
-	rapidjson::Value cmd;
-	cmd.SetObject();
-	rapidjson::Value payload;
-	payload.SetObject();
-	payload.AddMember("Id", this->msgId, allocator);
-	payload.AddMember("DeviceIndex", deviceIdx, allocator);
+void CButtplug::RequestServerInfo() {
+	boost::json::object payload;
+	payload["ClientName"] = "Fedoraware";
+	payload["MessageVersion"] = 2;
+	this->DoRequest("RequestServerInfo", payload);
+}
 
-	rapidjson::Value scalarList;
-	scalarList.SetArray();
-	
-	for (BPScalar s :  scalars) {
-		rapidjson::Value scalar;
-		scalar.SetObject();
-		scalar.AddMember("Index", rapidjson::Value().SetInt(s.index), allocator);
-		scalar.AddMember("Scalar", rapidjson::Value().SetFloat(s.scalar), allocator);
-		scalar.AddMember("ActuatorType", rapidjson::Value().SetString(rapidjson::StringRef(s.actuatorType)), allocator);
+void CButtplug::Ping() {
+	boost::json::object payload;
+	this->DoRequest("Ping", payload);
+}
 
-		scalarList.PushBack(scalar, allocator);
-	};
-	payload.AddMember("Scalars", scalarList, allocator);
-	cmd.AddMember("ScalarCmd", payload, allocator);
-	json.PushBack(cmd, allocator);
-	rapidjson::StringBuffer strbuf;
-	rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
-	json.Accept(writer);
+void CButtplug::ScalarCmd(int deviceIdx, std::vector<ButtPlug::BPScalar> scalars) {
+	boost::json::object payload;
+	payload["DeviceIndex"] = deviceIdx;
+	boost::json::array scArray = boost::json::array();
+	for (ButtPlug::BPScalar sc : scalars) {
+		scArray.push_back({
+			{"Index", sc.index},
+			{"Scalar",sc.scalar},
+			{"ActuatorType", sc.actuatorType}	
+		});
+	}
+	payload["Scalars"] = scArray;
+	this->DoRequest("ScalarCmd", payload);
+}
 
-	const char* jsonString = strbuf.GetString();
-	this->wsClient.send(this->hdl, jsonString, websocketpp::frame::opcode::text);
+void CButtplug::RequestDeviceList() {
+	boost::json::object payload;
+	this->DoRequest("RequestDeviceList", payload);
 }

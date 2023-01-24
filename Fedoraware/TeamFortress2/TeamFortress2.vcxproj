@@ -994,6 +994,8 @@
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\boost.1.79.0\build\boost.targets" Condition="Exists('..\packages\boost.1.79.0\build\boost.targets')" />
     <Import Project="..\packages\boost_random-vc143.1.79.0\build\boost_random-vc143.targets" Condition="Exists('..\packages\boost_random-vc143.1.79.0\build\boost_random-vc143.targets')" />
+    <Import Project="..\packages\boost_json-vc143.1.79.0\build\boost_json-vc143.targets" Condition="Exists('..\packages\boost_json-vc143.1.79.0\build\boost_json-vc143.targets')" />
+    <Import Project="..\packages\boost_container-vc143.1.79.0\build\boost_container-vc143.targets" Condition="Exists('..\packages\boost_container-vc143.1.79.0\build\boost_container-vc143.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -1001,5 +1003,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\boost.1.79.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost.1.79.0\build\boost.targets'))" />
     <Error Condition="!Exists('..\packages\boost_random-vc143.1.79.0\build\boost_random-vc143.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_random-vc143.1.79.0\build\boost_random-vc143.targets'))" />
+    <Error Condition="!Exists('..\packages\boost_json-vc143.1.79.0\build\boost_json-vc143.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_json-vc143.1.79.0\build\boost_json-vc143.targets'))" />
+    <Error Condition="!Exists('..\packages\boost_container-vc143.1.79.0\build\boost_container-vc143.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_container-vc143.1.79.0\build\boost_container-vc143.targets'))" />
   </Target>
 </Project>

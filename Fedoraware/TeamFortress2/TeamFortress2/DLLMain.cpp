@@ -109,6 +109,7 @@ void Uninitialize()
 	g_HookManager.Release();
 	g_PatchManager.Restore();
 
+	F::Buttplug.Shutdown();
 	ShutdownRichPresence();
 
 	Sleep(100);
